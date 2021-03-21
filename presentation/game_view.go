@@ -3,7 +3,8 @@ package presentation
 import (
 	"EbitenSample/application"
 	"EbitenSample/domain"
-	"EbitenSample/infrastructure"
+	"EbitenSample/domain/player"
+	player2 "EbitenSample/infrastructure/player"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image/color"
 	"log"
@@ -15,12 +16,12 @@ const (
 )
 
 var pointerImage = ebiten.NewImage(10, 30)
-var playerRepository = infrastructure.NewPlayerRepositoryImpl()
-var playerFactory = infrastructure.NewPlayerFactoryImpl()
+var playerRepository = player2.NewPlayerRepositoryImpl()
+var playerFactory = player2.NewPlayerFactoryImpl()
 
 type Game struct {
 	playerApplicationService *application.PlayerApplicationService
-	playerId                 domain.PlayerId
+	playerId                 player.Id
 }
 
 func (game Game) Update() error {
@@ -43,11 +44,11 @@ func (game Game) Update() error {
 		moveVec.Y += -1
 	}
 
-	if ebiten.IsKeyPressed(ebiten.KeySpace){
+	if ebiten.IsKeyPressed(ebiten.KeySpace) {
 
 	}
 
-	playerMoveDir := domain.PlayerMoveDir{Value: moveVec}
+	playerMoveDir := player.MoveDir{Value: moveVec}
 	game.playerApplicationService.MovePlayer(game.playerId, playerMoveDir)
 
 	return nil

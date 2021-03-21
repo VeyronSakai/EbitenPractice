@@ -1,10 +1,10 @@
-package domain
+package bullet
 
 type Bullet struct {
-	Id      BulletId
-	Pos     BulletPos
-	MoveDir BulletMoveDir
-	Speed   BulletSpeed
+	Id      Id
+	Pos     Pos
+	MoveDir MoveDir
+	Speed   Speed
 }
 
 //func NewBullet() (*Bullet, error){
@@ -17,6 +17,6 @@ func (b *Bullet) UpdatePos() {
 	b.Pos.Value.Y += b.MoveDir.Value.Y * b.Speed.Value
 }
 
-func (b *Bullet) UpdateMoveDir(dir BulletMoveDir) {
+func (b *Bullet) UpdateMoveDir(dir MoveDir) {
 	b.MoveDir = dir
 }

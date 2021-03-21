@@ -1,20 +1,20 @@
 package application
 
 import (
-	"EbitenSample/domain"
+	"EbitenSample/domain/player"
 	"log"
 )
 
 type PlayerApplicationService struct {
-	playerRepository domain.PlayerRepository
-	playerFactory    domain.PlayerFactory
+	playerRepository player.Repository
+	playerFactory    player.Factory
 }
 
-func NewPlayerApplicationService(repository domain.PlayerRepository, factory domain.PlayerFactory) *PlayerApplicationService {
+func NewPlayerApplicationService(repository player.Repository, factory player.Factory) *PlayerApplicationService {
 	return &PlayerApplicationService{repository, factory}
 }
 
-func (service *PlayerApplicationService) SpawnPlayer() (domain.PlayerId, error) {
+func (service *PlayerApplicationService) SpawnPlayer() (player.Id, error) {
 	factory := service.playerFactory
 	player, err := factory.Create()
 
@@ -29,7 +29,7 @@ func (service *PlayerApplicationService) SpawnPlayer() (domain.PlayerId, error) 
 	return player.Id, nil
 }
 
-func (service *PlayerApplicationService) MovePlayer(id domain.PlayerId, dir domain.PlayerMoveDir) {
+func (service *PlayerApplicationService) MovePlayer(id player.Id, dir player.MoveDir) {
 	player, err := service.playerRepository.Find(id)
 
 	if err != nil {
@@ -40,7 +40,7 @@ func (service *PlayerApplicationService) MovePlayer(id domain.PlayerId, dir doma
 	player.UpdatePos()
 }
 
-func (service *PlayerApplicationService) GetPlayerData(id domain.PlayerId) (*domain.Player, error) {
+func (service *PlayerApplicationService) GetPlayerData(id player.Id) (*player.Player, error) {
 	player, err := service.playerRepository.Find(id)
 
 	if err != nil {

@@ -1,19 +1,19 @@
-package domain
+package player
 
 type Player struct {
-	Id      PlayerId
-	Pos     PlayerPos
-	MoveDir PlayerMoveDir
-	Speed   PlayerSpeed
+	Id      Id
+	Pos     Pos
+	MoveDir MoveDir
+	Speed   Speed
 }
 
 const initialSpeed float64 = 3.0
 
 func NewPlayer() (*Player, error) {
 	playerId := NewPlayerId()
-	playerPos := PlayerPos{}
-	moveDir := PlayerMoveDir{}
-	speed := PlayerSpeed{Value: initialSpeed}
+	playerPos := Pos{}
+	moveDir := MoveDir{}
+	speed := Speed{Value: initialSpeed}
 	player := &Player{playerId, playerPos, moveDir, speed}
 
 	return player, nil
@@ -24,6 +24,6 @@ func (p *Player) UpdatePos() {
 	p.Pos.Value.Y += p.MoveDir.Value.Y * p.Speed.Value
 }
 
-func (p *Player) UpdateMoveDir(moveDir PlayerMoveDir) {
+func (p *Player) UpdateMoveDir(moveDir MoveDir) {
 	p.MoveDir = moveDir
 }
