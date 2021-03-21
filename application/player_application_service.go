@@ -16,24 +16,23 @@ func NewPlayerApplicationService(repository domain.PlayerRepository, factory dom
 
 func (service *PlayerApplicationService) SpawnPlayer() (domain.PlayerId, error) {
 	factory := service.playerFactory
-	playerId := domain.NewPlayerId()
-	player, err := factory.Create(playerId)
+	player, err := factory.Create()
 
 	if err != nil {
 		log.Fatal(err)
-		return domain.PlayerId{}, err
+		return player.Id, err
 	}
 
 	repository := service.playerRepository
 	repository.Save(player)
 
-	return playerId, nil
+	return player.Id, nil
 }
 
-func (service *PlayerApplicationService) MovePlayer(id domain.PlayerId, dir domain.PlayerMoveDir){
+func (service *PlayerApplicationService) MovePlayer(id domain.PlayerId, dir domain.PlayerMoveDir) {
 	player, err := service.playerRepository.Find(id)
 
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
@@ -41,10 +40,10 @@ func (service *PlayerApplicationService) MovePlayer(id domain.PlayerId, dir doma
 	player.UpdatePos()
 }
 
-func (service *PlayerApplicationService) GetPlayerData(id domain.PlayerId) (*domain.Player, error){
+func (service *PlayerApplicationService) GetPlayerData(id domain.PlayerId) (*domain.Player, error) {
 	player, err := service.playerRepository.Find(id)
 
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 

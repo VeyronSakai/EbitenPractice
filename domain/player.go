@@ -9,7 +9,8 @@ type Player struct {
 
 const initialSpeed float64 = 3.0
 
-func NewPlayer(playerId PlayerId) (*Player, error) {
+func NewPlayer() (*Player, error) {
+	playerId := NewPlayerId()
 	playerPos := PlayerPos{}
 	moveDir := PlayerMoveDir{}
 	speed := PlayerSpeed{Value: initialSpeed}
@@ -18,11 +19,11 @@ func NewPlayer(playerId PlayerId) (*Player, error) {
 	return player, nil
 }
 
-func (p *Player) UpdatePos(){
+func (p *Player) UpdatePos() {
 	p.Pos.Value.X += p.MoveDir.Value.X * p.Speed.Value
 	p.Pos.Value.Y += p.MoveDir.Value.Y * p.Speed.Value
 }
 
-func (p *Player) UpdateMoveDir(moveDir PlayerMoveDir){
+func (p *Player) UpdateMoveDir(moveDir PlayerMoveDir) {
 	p.MoveDir = moveDir
 }

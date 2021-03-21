@@ -12,8 +12,8 @@ func NewPlayerFactoryImpl() domain.PlayerFactory {
 	return &PlayerFactoryImpl{}
 }
 
-func (factory *PlayerFactoryImpl) Create(playerId domain.PlayerId) (*domain.Player, error) {
-	player, err := domain.NewPlayer(playerId)
+func (factory *PlayerFactoryImpl) Create() (*domain.Player, error) {
+	player, err := domain.NewPlayer()
 
 	if err != nil {
 		log.Fatal(err)
