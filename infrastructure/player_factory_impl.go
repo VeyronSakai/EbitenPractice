@@ -1,4 +1,4 @@
-package player
+package infrastructure
 
 import (
 	"EbitenSample/domain/player"

@@ -4,7 +4,7 @@ import (
 	"EbitenSample/application"
 	"EbitenSample/domain"
 	"EbitenSample/domain/player"
-	player2 "EbitenSample/infrastructure/player"
+	"EbitenSample/infrastructure"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image/color"
 	"log"
@@ -16,8 +16,8 @@ const (
 )
 
 var pointerImage = ebiten.NewImage(10, 30)
-var playerRepository = player2.NewPlayerRepositoryImpl()
-var playerFactory = player2.NewPlayerFactoryImpl()
+var playerRepository = infrastructure.NewPlayerRepositoryImpl()
+var playerFactory = infrastructure.NewPlayerFactoryImpl()
 
 type Game struct {
 	playerApplicationService *application.PlayerApplicationService
