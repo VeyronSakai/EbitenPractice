@@ -55,7 +55,7 @@ func (game Game) Update() error {
 }
 
 func (game Game) Draw(screen *ebiten.Image) {
-	player, err := game.playerApplicationService.GetPlayerData(game.playerId)
+	p, err := game.playerApplicationService.GetPlayerData(game.playerId)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -63,7 +63,7 @@ func (game Game) Draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 	// 画面の中央を原点にする
 	op.GeoM.Translate(screenWidth/2, screenHeight/2)
-	op.GeoM.Translate(player.Pos.Value.X, player.Pos.Value.Y)
+	op.GeoM.Translate(p.Pos.Value.X, p.Pos.Value.Y)
 	screen.DrawImage(pointerImage, op)
 }
 
