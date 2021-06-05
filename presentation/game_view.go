@@ -4,7 +4,6 @@ import (
 	"EbitenSample/application"
 	"EbitenSample/domain"
 	"EbitenSample/domain/player"
-	"EbitenSample/infrastructure"
 	"github.com/hajimehoshi/ebiten/v2"
 	"image/color"
 	"log"
@@ -16,8 +15,6 @@ const (
 )
 
 var pointerImage = ebiten.NewImage(10, 30)
-var playerRepository = infrastructure.NewPlayerRepositoryImpl()
-var playerFactory = infrastructure.NewPlayerFactoryImpl()
 
 type Game struct {
 	playerApplicationService *application.PlayerApplicationService
@@ -71,10 +68,10 @@ func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return screenWidth, screenHeight
 }
 
-func (game *Game) Initialize() {
+func (game *Game) Initialize(playerRepository player.Repository, factory player.Factory) {
 	initializeView()
 
-	game.playerApplicationService = application.NewPlayerApplicationService(playerRepository, playerFactory)
+	game.playerApplicationService = application.NewPlayerApplicationService(playerRepository, factory)
 
 	playerId, err := game.playerApplicationService.SpawnPlayer()
 	if err != nil {

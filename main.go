@@ -1,6 +1,7 @@
 package main
 
 import (
+	"EbitenSample/infrastructure"
 	"EbitenSample/presentation"
 	"log"
 
@@ -9,7 +10,11 @@ import (
 
 func main() {
 	game := &presentation.Game{}
-	game.Initialize()
+
+	playerRepository := infrastructure.NewPlayerRepositoryImpl()
+	playerFactory := infrastructure.NewPlayerFactoryImpl()
+
+	game.Initialize(playerRepository, playerFactory)
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
