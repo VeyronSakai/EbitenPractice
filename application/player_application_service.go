@@ -16,36 +16,36 @@ func NewPlayerApplicationService(repository player.Repository, factory player.Fa
 
 func (service *PlayerApplicationService) SpawnPlayer() (player.Id, error) {
 	factory := service.playerFactory
-	player, err := factory.Create()
+	p, err := factory.Create()
 
 	if err != nil {
 		log.Fatal(err)
-		return player.Id, err
+		return p.Id, err
 	}
 
 	repository := service.playerRepository
-	repository.Save(player)
+	repository.Save(p)
 
-	return player.Id, nil
+	return p.Id, nil
 }
 
 func (service *PlayerApplicationService) MovePlayer(id player.Id, dir player.MoveDir) {
-	player, err := service.playerRepository.Find(id)
+	p, err := service.playerRepository.Find(id)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	player.UpdateMoveDir(dir)
-	player.UpdatePos()
+	p.UpdateMoveDir(dir)
+	p.UpdatePos()
 }
 
 func (service *PlayerApplicationService) GetPlayerData(id player.Id) (*player.Player, error) {
-	player, err := service.playerRepository.Find(id)
+	p, err := service.playerRepository.Find(id)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return player, nil
+	return p, nil
 }
