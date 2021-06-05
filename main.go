@@ -9,13 +9,16 @@ import (
 )
 
 func main() {
-	game := &presentation.Game{}
-
 	playerRepository := infrastructure.NewPlayerRepositoryImpl()
 	playerFactory := infrastructure.NewPlayerFactoryImpl()
 
-	game.Initialize(playerRepository, playerFactory)
-	if err := ebiten.RunGame(game); err != nil {
+	game, err := presentation.NewGame(playerRepository, playerFactory)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	presentation.InitializeView()
+	if err = ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
 }

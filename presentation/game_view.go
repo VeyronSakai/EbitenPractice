@@ -21,7 +21,25 @@ type Game struct {
 	playerId                 player.Id
 }
 
-func (game Game) Update() error {
+func NewGame(repository player.Repository, factory player.Factory) (*Game, error) {
+
+	playerApplicationService := application.NewPlayerApplicationService(repository, factory)
+
+	playerId, err := playerApplicationService.SpawnPlayer()
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+
+	game := &Game{
+		playerApplicationService: playerApplicationService,
+		playerId:                 playerId,
+	}
+
+	return game, nil
+}
+
+func (game *Game) Update() error {
 
 	moveVec := domain.Vector2{}
 
@@ -64,24 +82,11 @@ func (game Game) Draw(screen *ebiten.Image) {
 	screen.DrawImage(pointerImage, op)
 }
 
-func (game *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
+func (game Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return screenWidth, screenHeight
 }
 
-func (game *Game) Initialize(playerRepository player.Repository, factory player.Factory) {
-	initializeView()
-
-	game.playerApplicationService = application.NewPlayerApplicationService(playerRepository, factory)
-
-	playerId, err := game.playerApplicationService.SpawnPlayer()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	game.playerId = playerId
-}
-
-func initializeView() {
+func InitializeView() {
 	pointerImage.Fill(color.RGBA{R: 0xff, A: 0xff})
 	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowResizable(true)

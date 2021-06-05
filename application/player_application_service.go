@@ -34,6 +34,7 @@ func (service *PlayerApplicationService) MovePlayer(id player.Id, dir player.Mov
 
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
 
 	p.UpdateMoveDir(dir)
